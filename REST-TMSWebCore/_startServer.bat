@@ -1,0 +1,1 @@
+start .\Win64\Debug\Server.exe
