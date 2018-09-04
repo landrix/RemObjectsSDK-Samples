@@ -108,6 +108,7 @@ object Form1: TForm1
     Top = 256
   end
   object WebHttpRequest1: TWebHttpRequest
+    Command = httpPOST
     Headers.Strings = (
       'Cache-Control=no-cache')
     OnResponse = WebRESTClient1Response

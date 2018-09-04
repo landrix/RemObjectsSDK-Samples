@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteRodl>
+	<Server>
+		<Name>SimpleService</Name>
+		<ServerUri>https://localhost:8099/bin</ServerUri>
+	</Server>
+</RemoteRodl>

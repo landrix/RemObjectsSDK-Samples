@@ -64,7 +64,7 @@ procedure TForm1.WebHttpRequest1RequestResponse(Sender: TObject;
   ARequest: TJSXMLHttpRequest; AResponse: string);
 begin
   WebMemo1.Lines.Add(AResponse);
-  WebMemo1.Lines.Add(ARequest.responseText);
+  WebMemo1.Lines.Add(ARequest.ResponseHeaders['Access-Token']);
 end;
 
 procedure TForm1.WebLoginPanel1Click(Sender: TObject);
@@ -72,7 +72,16 @@ var
   postData : String;
 begin
   postData := '{ "Password": "'+WebLoginPanel1.Password+'", "Username": "'+WebLoginPanel1.User+'" }';
-  WebRESTClient1.HttpsPost('http://localhost:8099/api/login/login',postData);
+
+  WebHttpRequest1.Command := httpPOST;
+  WebHttpRequest1.Headers.AddPair('Content-Type','application/json');
+  WebHttpRequest1.Headers.AddPair('Accept','application/json');
+  WebHttpRequest1.URL := 'http://localhost:8099/api/login/login';
+  WebHttpRequest1.PostData := '{"Password": "test","Username": "test"}';
+  WebHttpRequest1.Execute;
+
+
+  //WebRESTClient1.HttpsPost('http://localhost:8099/api/login/login',postData);
 end;
 
 procedure TForm1.WebButton1Click(Sender: TObject);
