@@ -56,6 +56,9 @@ implementation
 procedure TForm1.WebFormCreate(Sender: TObject);
 begin
   WebHttpRequest1.Headers.Clear; //Remove Cache-Control=no-cache
+  WebHttpRequest1.Headers.AddPair('Content-Type','application/json');
+  WebHttpRequest1.Headers.AddPair('Accept','application/json');
+
   WebLoginPanel1.User := 'test';
   WebLoginPanel1.Password := 'test';
 end;
@@ -63,25 +66,28 @@ end;
 procedure TForm1.WebHttpRequest1RequestResponse(Sender: TObject;
   ARequest: TJSXMLHttpRequest; AResponse: string);
 begin
-  WebMemo1.Lines.Add(AResponse);
-  WebMemo1.Lines.Add(ARequest.ResponseHeaders['Access-Token']);
+  WebMemo1.Lines.Add(ARequest.getResponseHeader('Access-Token'));
+//  WebMemo1.Lines.Add(ARequest.getAllResponseHeaders);
 end;
 
 procedure TForm1.WebLoginPanel1Click(Sender: TObject);
 var
   postData : String;
+  headers: TCoreCloudHeaders;
 begin
-  postData := '{ "Password": "'+WebLoginPanel1.Password+'", "Username": "'+WebLoginPanel1.User+'" }';
+  //postData := '{ "Password": "'+WebLoginPanel1.Password+'", "Username": "'+WebLoginPanel1.User+'" }';
+  postData := '{"Password": "test","Username": "test"}';
 
-  WebHttpRequest1.Command := httpPOST;
-  WebHttpRequest1.Headers.AddPair('Content-Type','application/json');
-  WebHttpRequest1.Headers.AddPair('Accept','application/json');
-  WebHttpRequest1.URL := 'http://localhost:8099/api/login/login';
-  WebHttpRequest1.PostData := '{"Password": "test","Username": "test"}';
-  WebHttpRequest1.Execute;
+//  WebHttpRequest1.Command := httpPOST;
+//  WebHttpRequest1.URL := 'http://localhost:8099/api/login/login';
+//  WebHttpRequest1.PostData := '{"Password": "test","Username": "test"}';
+//  WebHttpRequest1.Execute;
 
+  AddHeader(headers,'Content-Type','application/json');
+  AddHeader(headers,'Accept','application/json');
 
-  //WebRESTClient1.HttpsPost('http://localhost:8099/api/login/login',postData);
+  WebRESTClient1.HttpsPost('http://localhost:8099/api/login/login',headers,postData);
+//  WebRESTClient1.HttpsPost('http://localhost:8099/api/login/login','application/json',postData);
 end;
 
 procedure TForm1.WebButton1Click(Sender: TObject);

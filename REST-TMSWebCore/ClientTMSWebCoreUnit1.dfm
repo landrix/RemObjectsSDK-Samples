@@ -104,6 +104,7 @@ object Form1: TForm1
   end
   object WebRESTClient1: TWebRESTClient
     OnResponse = WebRESTClient1Response
+    OnRequestResponse = WebHttpRequest1RequestResponse
     Left = 264
     Top = 256
   end
